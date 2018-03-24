@@ -59,37 +59,7 @@ class USER{
 			echo "Query SELECT Failed ".$e->getMessage();
 		}
 	}
-	public static function Email_Exists($email){
-		$query = "SELECT user_id FROM USERS WHERE email = '$email' ";
-		self::Init_Database();
-		try{
-			$sql = self::$database->Connection->prepare($query);
-			$sql->execute();
-			$result = $sql->fetch(PDO::FETCH_OBJ);
-			
-			return !empty($result->user_id);
-		}catch(PDOException $e){
-			echo "Query SELECT Failed ".$e->getMessage();
-		}
-	}
-	
-	public static function Get_User($user_id){
-        $encrypted_password = self::Encrypt($password);
-        $query  = "SELECT * FROM USERS ";
-        $query .= "WHERE user_id = $user_id";
-        
-		self::Init_Database();
-		try{
-			$sql = self::$database->Connection->prepare($query);
-			$sql->execute();
-			$result = $sql->fetch(PDO::FETCH_OBJ);
-			
-			return $result;
-			
-		}catch(PDOException $e){
-			echo "Query SELECT Failed ".$e->getMessage();
-		}
-	}
+
     public static function CreateSalt($password){
          
          $random = md5($password);
@@ -109,27 +79,11 @@ class USER{
         $encryptedPassword = crypt($password, $hashformat_and_salt);
         return $encryptedPassword;
     }
-	public static function Update_Password($user_id , $new_password){
-		
-		$reset_password = 1;
-        $encrypted_password = self::Encrypt($new_password);
-        $query  = "UPDATE USERS SET password = '$encrypted_password' , ";
-		$query .= "reset_password = $reset_password  ";
-        $query .= "WHERE user_id = $user_id";
-		self::Init_Database();
-		try{
-			self::$database->Connection->exec($query);
-			return true;
-		}catch(PDOException $e){
-			echo "Query UPDATE Failed ".$e->getMessage();
-			return false;
-		}
-	}
-	public static function Delete($user_id){
+	public static function Delete($username){
 		
 		
-        $query  = "DELETE FROM USERS  ";
-		$query .= "WHERE user_id = $user_id";
+        $query  = "DELETE FROM user  ";
+		$query .= "WHERE username = $username";
 		self::Init_Database();
 		try{
 			self::$database->Connection->exec($query);
