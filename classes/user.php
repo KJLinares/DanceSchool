@@ -1,20 +1,24 @@
 
 <?php 
 include "database.php";
+
+
 class USER{
 	
 	private $username;
     private $password;
     private $user_type;
+    private $salt;
     
 	private static $database;
 	
-	function __construct($username , $password, $user_type)
+	function __construct($username , $password, $user_type, &salt)
     {
         
         $this->username = $username;
         $this->password = $password;
         $this->user_type = $user_type;
+        $this->salt = $salt;
 	}
 	public static function Init_Database(){
 		if(! isset(self::$database)){
@@ -25,8 +29,8 @@ class USER{
 	
 	
 	public function Create(){
-		$query = "INSERT INTO user(username, password, user_type) ";
-		$query .= "VALUES(?,?,?)";
+		$query = "INSERT INTO user(username, password, user_type, salt) ";
+		$query .= "VALUES(?,?,?,?)";
 		self::Init_Database();
 		
 		try{
@@ -34,9 +38,12 @@ class USER{
             $sql->bindParam(1, $this->username);
             $sql->bindParam(2, $this->password);
             $sql->bindParam(3, $this->user_type); 
+            $sql->bindParam(4, $this->salt); 
            
 			
 			$sql->execute();
+            
+            return true;
 			
 		}catch(PDOException $e){
 			echo "Query INSERT Failed ".$e->getMessage();
@@ -83,7 +90,7 @@ class USER{
 		
 		
         $query  = "DELETE FROM user  ";
-		$query .= "WHERE username = $username";
+		$query .= "WHERE username = '$username'";
 		self::Init_Database();
 		try{
 			self::$database->Connection->exec($query);
@@ -91,6 +98,20 @@ class USER{
 		}catch(PDOException $e){
 			echo "Query UPDATE Failed ".$e->getMessage();
 			return false;
+		}
+	}
+    
+    public static function Exists($username){
+		$query = "SELECT username FROM user WHERE username = '$username' ";
+		self::Init_Database();
+		try{
+			$sql = self::$database->Connection->prepare($query);
+			$sql->execute();
+			$result = $sql->fetch(PDO::FETCH_OBJ);
+			
+			return !empty($result->username);
+		}catch(PDOException $e){
+			echo "Query SELECT Failed ".$e->getMessage();
 		}
 	}
 }

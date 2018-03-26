@@ -27,10 +27,25 @@ include "classes/user.php";
                                  
                                  switch($result){
                                      case "Student" :
+                                         
+                                         echo '<script language="javascript">';
+                                         echo 'alert("Student")';
+                                         echo '</script>';
+                                         
                                          break;
                                      case "Teacher" :
+                                         
+                                         echo '<script language="javascript">';
+                                         echo 'alert("Teacher")';
+                                         echo '</script>';
+                                         
                                          break;
                                      case "Manager":
+                                         
+                                         echo '<script language="javascript">';
+                                         echo 'alert("Manager")';
+                                         echo '</script>';
+                                         
                                          break;
                                  }
                                      
