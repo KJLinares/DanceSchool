@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<?php 
+include "classes/user.php";
+?>
+ 
+
+  
 <html lang="en">
 <head>
    <title>DanceStudio</title>
@@ -27,6 +34,50 @@
   
   </head>
 <body>
+
+    <?php
+ 
+				$login_error = '';
+				$login_confirm = '';
+				 
+				if(isset($_POST['submit']) && !empty($_POST['username']) && !empty($_POST['password']))
+				{
+							$username = $_POST['username'];
+							$password = $_POST['password'];
+							//Send a query to database to check the username and password
+										
+							
+							$result = USER::Login($username, $password);
+							 if(!$result){
+								
+								$login_error = '<img src="images/No.png" width="25px" />';
+								$login_error .= '<strong>   Error : Username and Password combination is incorrect !</strong><br/><br/><br/><br/>';
+							}else{
+								
+								$login_confirm = "<strong>   Your Login is Successfull ! </strong><br/><br/><br/><br/>";
+                                 
+                                 switch($result){
+                                     case "Student" :
+                                         
+                                         $login_confirm .= "Student";
+                                         break;
+                                     case "Teacher" :
+                                         
+                                         $login_confirm .= "Teacher";
+                                         
+                                         break;
+                                     case "Manager":
+                                         
+                                         $login_confirm .= "Manager";
+                                         
+                                         break;
+                                 }
+                                     
+                                     
+							}
+						
+					}
+				?>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
@@ -38,18 +89,21 @@
     </ul> 
 	</div>
 </nav>
-  
+    <br/><br/>
+            <font color=#CC0000><?php echo $login_error; ?></font> 
+            <font color=#006600><?php echo $login_confirm; ?></font> 
+            <br/><br/>
 </br>
 </br>
 <div class="Box" >
-<form action="/action_page.php">
+<form action="#" method="post">
   <div class="form-group">
     <label for="username" style="color:#154360">Username:</label>
-    <input type="username" class="form-control" id="username">
+    <input type="username" class="form-control" name="username">
   </div>
   <div class="form-group">
     <label for="password" style="color:#154360">Password:</label>
-    <input type="password" class="form-control" id="password">
+    <input type="password" class="form-control" name="password">
   </div>
   <div class="form-check">
     <label class="form-check-label">
@@ -57,7 +111,7 @@
     </label>
 	</br>
   </div>
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">Submit</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="submit">Submit</button>
 </form>
 </div>
 </body>

@@ -29,6 +29,9 @@ class USER{
     public function GetUsername(){
         return $this->username;
     }
+    public function GetPassword(){
+        return $this->password;
+    }
 	
 	
 	public function Create(){
@@ -132,6 +135,25 @@ class USER{
 			return !empty($result->username);
 		}catch(PDOException $e){
 			echo "Query SELECT Failed ".$e->getMessage();
+		}
+	}
+    
+    	public static function Update_Password($username , $new_password){
+		self::Init_Database();
+		$connection = self::$database->Connection;
+		
+		$salt = self::Create_Salt($new_password);
+		$new_encrypted = crypt($new_password, $salt);
+		try{
+			$connection->beginTransaction();
+			$query = "Update user Set password = '$new_encrypted' WHERE username = '$username' ";
+			$connection->exec($query);
+			$query = "Update user Set salt = '$salt' WHERE username = '$username' ";
+			$connection->exec($query);
+			$connection->commit();
+		}catch(PDOException $e){
+			echo "Query Update Failed ".$e->getMessage();
+			$connection->rollback();
 		}
 	}
 }
