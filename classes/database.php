@@ -1,9 +1,8 @@
 <?php
 
-
-
 include "dbConfig.php";
-class Database{
+
+class DatabasePDO{
 	
 	public $Connection;
 	
@@ -19,12 +18,13 @@ class Database{
 		global $HOST , $USER , $PASSWORD , $DB_NAME;
 		
 		try{
-			$this->Connection =  new PDO("mysql:host=$HOST; dbname=$DB_NAME" ,
+			$this->Connection =  new PDO("mysql:host=$HOST;dbname=$DB_NAME" ,
 			                             $USER , $PASSWORD);
 			$this->Connection->setAttribute(PDO::ATTR_ERRMODE , 
 			                                PDO::ERRMODE_EXCEPTION);
 			
-			
+			if ($this->Connection)
+                echo "You are connected ";
 		}catch(PDOException $e){
 			echo "Connection Failed ".$e->getMessage();
 		}

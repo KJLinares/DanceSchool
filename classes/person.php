@@ -1,6 +1,7 @@
 <?php
 
-include "database.php";
+
+if(!class_exists('DatabasePDO')){ include "database.php"; }
 include "user.php";
 
 abstract class PERSON {
@@ -23,9 +24,9 @@ abstract class PERSON {
         $this->user = $user;
 	}
     
-	final public static function Init_Database(){
+	final public function Init_Database(){
 		if(! isset(self::$database)){
-			self::$database = new Database();
+			self::$database = new DatabasePDO();
 		}
 	}
 	

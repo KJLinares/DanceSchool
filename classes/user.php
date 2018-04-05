@@ -1,6 +1,6 @@
 
 <?php 
-include "database.php";
+if(!class_exists('DatabasePDO')){ include "database.php"; }
 
 
 class USER{
@@ -12,7 +12,7 @@ class USER{
     
 	private static $database;
 	
-	function __construct($username , $password, $user_type, &salt)
+	function __construct($username , $password, $user_type, $salt= null )
     {
         
         $this->username = $username;
@@ -22,13 +22,20 @@ class USER{
 	}
 	public static function Init_Database(){
 		if(! isset(self::$database)){
-			self::$database = new Database();
+			self::$database = new DatabasePDO();
 		}
 	}
 	
+    public function GetUsername(){
+        return $this->username;
+    }
 	
 	
 	public function Create(){
+        
+		$this->salt = self::Create_Salt($this->password);
+		$this->password = crypt($this->password, $this->salt);
+        
 		$query = "INSERT INTO user(username, password, user_type, salt) ";
 		$query .= "VALUES(?,?,?,?)";
 		self::Init_Database();
@@ -51,10 +58,16 @@ class USER{
 	}
 	
 	public static function Login($username, $password){
-        $encrypted_password = self::Encrypt($password);
-		$query  = "SELECT username FROM user ";
-        $query .= "WHERE username = '$username' AND password = '$encrypted_password'";
-		self::Init_Database();
+        
+        self::Init_Database();
+        
+		$salt = self::Get_Salt($username);
+		$encrypted = crypt($password , $salt);
+        
+        
+		$query  = "SELECT * FROM user ";
+        $query .= "WHERE username = '$username' AND password = '$encrypted'";
+		
 		try{
 			$sql = self::$database->Connection->prepare($query);
 			$sql->execute();
@@ -65,27 +78,34 @@ class USER{
 		}catch(PDOException $e){
 			echo "Query SELECT Failed ".$e->getMessage();
 		}
-	}
+	
+    }
 
-    public static function CreateSalt($password){
+    public static function Create_Salt($password){
          
-         $random = md5($password);
-         $salt = substr($random, 0, 22); 
         
-         return  $salt;
+        $random = MD5($password);
+		$salt = Substr($random, 0, 22);
+		$hash = '$2y$10$';
+		return $hash.$salt;
     }
-    public static function Encrypt($password){
-        //Using Crypt function with salt (High Security)
-        //step1: Define a variable salt 
-		//with some random text of length 22 characters 
-        $salt =  self::CreateSalt($password);
-	   
-        //step2: Define a hash format (MD5, BLOWFISH, SHA256 , SHA512)
-        $hashformat = "$2y$10$";//Generate hash code 10 times
-        $hashformat_and_salt = $hashformat . $salt ;
-        $encryptedPassword = crypt($password, $hashformat_and_salt);
-        return $encryptedPassword;
-    }
+    
+    public static function Get_Salt($username){
+		self::init_database();
+		$connection = self::$database->Connection;
+		try{
+			$query = "SELECT * FROM user WHERE username = '$username' ";
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
+			
+			return $userObj->salt;
+			
+		}catch(PDOException $e){
+			echo "Query Failed ".$e->getMessage();
+		}
+	}
+  
 	public static function Delete($username){
 		
 		
