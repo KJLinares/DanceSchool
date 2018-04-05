@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php 
+//include "classes/user.php";
+include "classes/student.php";
+?>
+
 <html lang="en">
 <head>
    <title>DanceStudio</title>
@@ -26,6 +31,53 @@
    
   </head>
 <body>
+
+ 
+<?php
+		$password_conf_error = "";
+		$email_error = "";
+		$register_confirm = "";
+		
+	if(isset($_POST['Submit']) && !empty($_POST['Username'])&& !empty($_POST['Password']))
+    {
+        
+        $username = $_POST['Username'];
+		
+        
+        //Send a query to database to check if the user already exists 
+		if(USER::Exists($username)){
+			
+            $email_error .= '  Error : Username already exist !<br/><br/>';
+        }
+		
+		//Send a query to database to create new user
+		if(! USER::Exists($username) ){
+		
+
+            $name = $_POST['Name'];
+            $email = $_POST['Email'];
+            $phone = $_POST['Phone'];
+            $password = $_POST['Password'];
+            $user_type = "Student";
+            
+            //Send a query to database to insert the data of the new user 
+			
+			
+            $newStudent = new STUDENT($name , $email, $phone, new USER($username, $password, $user_type));
+			
+			$newStudent_id = $newStudent->Create();
+			
+			$register_confirm  = '   <img src="images/Yes.png" width="25px" />';
+            $register_confirm .= "   Your account is successfully created ! <br>";
+			$register_confirm .= "   Please, login on Sign-In page.<br>";
+			$register_confirm .= "   Your Student ID is $newStudent_id <br><br><br><br>";
+			
+        }
+		
+    }	
+			
+			?>
+			
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
@@ -42,35 +94,35 @@
 </br>
 </br>
 
+<br/><br/>
+			<font color=#CC0000><?php echo $password_conf_error; ?></font> 			
+			<font color=#CC0000><?php echo $email_error; ?></font> 
+            <font color=#006600><?php echo $register_confirm; ?></font> 
+            <br/><br/>	 
+
 <div class="Box">
-<form action="/action_page.php">
+<form action="#" method="post">
  <div class="form-group">
     <label for="name" style="color:#154360">Name:</label>
-    <input type="name" class="form-control" id="name">
+    <input type="name" class="form-control" name="Name">
   </div>
   <div class="form-group">
      <label for="phone" style="color:#154360" >Phone:</label>
-    <input type="text" class="form-control" id="phone">
+    <input type="text" class="form-control" name="Phone">
   </div>
   <div class="form-group">
      <label for="email" style="color:#154360">Email address:</label>
-    <input type="email" class="form-control" id="email">
+    <input type="email" class="form-control" name="Email">
   </div>
   <div class="form-group">
     <label for="username" style="color:#154360">Username:</label>
-    <input type="text" class="form-control" id="username">
+    <input type="text" class="form-control" name="Username">
   </div>
   <div class="form-group">
     <label for="pwd" style="color:#154360">Password:</label>
-    <input type="password" class="form-control" id="password">
+    <input type="password" class="form-control" name="Password">
   </div>
-  <div class="form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="checkbox" style="color:#154360"> Remember me
-    </label>
-	</br>
-  </div>
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">Submit</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="Submit">Submit</button>
 </form>
 </div>
 </div>

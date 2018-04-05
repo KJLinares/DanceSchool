@@ -1,7 +1,6 @@
 
 <?php 
-include "database.php";
-include "user.php";
+
 include "person.php";
 
 
@@ -25,7 +24,7 @@ class STUDENT extends PERSON{
             $sql->bindParam(1, $this->name);
             $sql->bindParam(2, $this->email);
             $sql->bindParam(3, $this->phone); 
-            $sql->bindParam(4, $this->user->username); 
+            $sql->bindParam(4, $this->user->GetUsername()); 
            
 			
 			$sql->execute();
@@ -40,7 +39,7 @@ class STUDENT extends PERSON{
 	}
 	
 	
-	public static function Delete($student_id){
+	public function Delete($student_id){
 		
         $query  = "DELETE FROM student  ";
 		$query .= "WHERE student_id = $student_id";
