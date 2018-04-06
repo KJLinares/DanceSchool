@@ -34,7 +34,7 @@ abstract class PERSON {
 	
 	public function Create(){}
 	
-	public function Update($person_id){}
+	public function Update(){}
     
 	public function Delete($person_id){}
     
