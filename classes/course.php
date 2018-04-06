@@ -191,6 +191,39 @@ class COURSE {
         echo "</table>";
 }
     
+    
+    
+    
+    public static function Get_Course_Name($course_id) {
+	//TODO ...
+    $courseName = 'Course';
+    
+		self::Init_Database();
+        
+    $connection = self::$database->Connection;
+    $query = "SELECT * FROM course WHERE course_id = $course_id ;";
+    
+		try{
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
+			
+			return $userObj->name;
+			
+		}catch(PDOException $e){
+			echo "Query Failed ".$e->getMessage();
+		}
+        
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 
