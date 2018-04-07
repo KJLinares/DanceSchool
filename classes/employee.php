@@ -189,7 +189,103 @@ class EMPLOYEE extends PERSON{
 	}
         
         echo "</table>";
+        
+        
 }
+    
+    
+    
+      public static function ListTeacherCourses($teacher_id){
+        
+		PERSON::Init_Database();
+        
+		$connection = PERSON::$database->Connection;
+		$query  = "SELECT course_id, name, start_date, end_date, schedule ";
+        $query .= "FROM course ";
+        $query .= "WHERE employee_id = $teacher_id";
+		try{
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $result;
+			
+		}catch(PDOException $e)
+		{
+			echo "Query Read teacher course Failed: ".$e->getMessage();
+		}
+    }
+    
+        public stat function DisplayTeacherCourses($array){
+       
+      
+        echo "<table>";
+        
+        echo "<th>Course ID</th>";
+        echo "<th>Name</th>";
+        echo "<th>Start Date</th>";
+        echo "<th>End Date</th>";
+        echo "<th>Schedule</th>";
+        
+        
+	foreach($array as $Index => $Element){
+		echo "<tr>";
+			echo "<td>";
+			echo $Element['course_id'];
+			echo "</td>";
+							
+			echo "<td>";
+			echo "<h2 style=\"color:#CC0000;\">";
+			echo $Element['name'];
+			echo "</h2>";
+            echo "</td>"
+                
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['start_date'];
+			echo "</h2>";
+            echo "</td>"
+                
+                
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['end_date'];
+			echo "</h2>";
+            echo "</td>"
+                    
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['schedule'];
+			echo "</h2>";
+            echo "</td>"
+                
+			echo "</tr>";
+	}
+        
+        echo "</table>";
+    }
+    
+    
+    public static function AddCancelation($course_id, $date){
+        
+          //creating entry on course table 
+		$query = "INSERT INTO cancelation ";
+		$query .= "VALUES(?, ?)";
+		PERSON::Init_Database();
+		
+		try{
+			$sql = PERSON::$database->Connection->prepare($query);
+            $sql->bindParam(1, $course_id);
+            $sql->bindParam(2, $date);
+			$sql->execute();
+            
+			
+		}catch(PDOException $e){
+			echo "Query INSERT Failed ".$e->getMessage();
+		}
+    }
+    
+    
     
 }
 ?>

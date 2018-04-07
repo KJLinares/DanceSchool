@@ -65,7 +65,7 @@ class COURSE {
     }
 	
 	public function Update(){
-         $course_id = $this->course_id;
+        $course_id = $this->course_id;
         
 		$query = "UPDATE course ";
 		$query .= "SET name = ? , start_date = ? , end_date = ?, schedule = ?, price = ? , employee_id = ? ";
@@ -218,9 +218,83 @@ class COURSE {
     
     
     
+    public static function GetAllCancelations(){
+        self::Init_Database();
+        
+		$connection = self::$database->Connection;
+		$query  = "SELECT c.course_id, c.name, c.schedule, c.price, c.employee_id, can.date ";
+        $query .= "FROM cancelation can, course c";
+        $query .= "WHERE c.course_id = can.course_id";
+		try{
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $result;
+			
+		}catch(PDOException $e)
+		{
+			echo "Query Read students Failed: ".$e->getMessage();
+		}
+        
+    }
     
     
-    
+    public static function DisplayAllCancelations($array){
+        
+        
+      
+        echo "<table>";
+        
+        echo "<th>Course ID</th>";
+        echo "<th>Name</th>";
+        echo "<th>schedule</th>";
+        echo "<th>price</th>";
+        echo "<th>employee_id</th>";
+        echo "<th>Cancelation Date</th>";
+        
+        
+	foreach($array as $Index => $Element){
+		echo "<tr>";
+			echo "<td>";
+			echo $Element['course_id'];
+			echo "</td>";
+							
+			echo "<td>";
+			echo "<h2 style=\"color:#CC0000;\">";
+			echo $Element['name'];
+			echo "</h2>";
+            echo "</td>"
+                    
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['schedule'];
+			echo "</h2>";
+            echo "</td>"
+                    
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['price'];
+			echo "</h2>";
+            echo "</td>"
+                    
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['employee_id'];
+			echo "</h2>";
+            echo "</td>"
+                    
+			echo "<td>";
+			echo "<h2 style=\"color:#121111;\">";
+			echo $Element['date'];
+			echo "</h2>";
+            echo "</td>"
+                
+			echo "</tr>";
+	}
+        
+        echo "</table>";
+    }
     
     
     
