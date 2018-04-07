@@ -232,7 +232,7 @@ class STUDENT extends PERSON{
     
     
      
-    function DisplayStudentCourses($array){
+    public static function DisplayStudentCourses($array){
        
       
         echo "<table>";
