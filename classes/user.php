@@ -61,22 +61,23 @@ class USER{
 	}
 	
 	public static function Login($username, $password){
-        
+        echo "Login";
         self::Init_Database();
         
 		$salt = self::Get_Salt($username);
 		$encrypted = crypt($password , $salt);
-        
-        
+        echo "salt ".$salt."<br>";
+        echo "crypted ".$encrypted."<br>";
 		$query  = "SELECT * FROM user ";
-        $query .= "WHERE username = '$username' AND password = '$encrypted'";
+        $query .= "WHERE username = '$username' ";
 		
 		try{
 			$sql = self::$database->Connection->prepare($query);
 			$sql->execute();
 			$result = $sql->fetch(PDO::FETCH_OBJ);
-			
-			return !empty($result->$user_type);
+			$password = $result->password;
+            echo "password ".$password."<br>";
+			return ($password == $encrypted);
 			
 		}catch(PDOException $e){
 			echo "Query SELECT Failed ".$e->getMessage();
@@ -90,7 +91,7 @@ class USER{
         $random = MD5($password);
 		$salt = Substr($random, 0, 22);
 		$hash = '$2y$10$';
-		return $hash.$salt;
+		return $hash.$salt."$";
     }
     
     public static function Get_Salt($username){

@@ -38,7 +38,7 @@ class STUDENT extends PERSON{
 		}
 	}
 	
-	public stat function AddCourse($student_id, $course_id, $status){
+	public static function AddCourse($student_id, $course_id, $status){
         
         $query = "INSERT INTO student_course ( student_id, course_id, status) ";
 		$query .= "VALUES(?,?,?)";
@@ -181,26 +181,26 @@ class STUDENT extends PERSON{
 			echo "<h2 style=\"color:#CC0000;\">";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['email'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['phone'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['username'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
 			echo "</tr>";
 	       }
         
@@ -257,44 +257,44 @@ class STUDENT extends PERSON{
 			echo "<h2 style=\"color:#CC0000;\">";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['start_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['end_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['schedule'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['price'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['employee_id'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['status'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "</tr>";
 	}

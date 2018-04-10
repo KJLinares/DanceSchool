@@ -47,8 +47,8 @@ include "classes/user.php";
 							//Send a query to database to check the username and password
 										
 							
-							$result = USER::Login($username, $password);
-							 if(!$result){
+							$result = USER::Login($username, $password);//
+							 if($result === FALSE){
 								
 								$login_error = '<img src="images/No.png" width="25px" />';
 								$login_error .= '<strong>   Error : Username and Password combination is incorrect !</strong><br/><br/><br/><br/>';
@@ -56,11 +56,11 @@ include "classes/user.php";
 								
 								$login_confirm = "<strong>   Your Login is Successfull ! </strong><br/><br/><br/><br/>";
                                  
-                                 switch($result){
+                               /*  switch($result){
                                      case "Student" :
                                          
                                          $login_confirm .= "Student";
-                                         break;
+                                    break;
                                      case "Teacher" :
                                          
                                          $login_confirm .= "Teacher";
@@ -73,7 +73,7 @@ include "classes/user.php";
                                          break;
                                  }
                                      
-                                     
+                                 */    
 							}
 						
 					}
@@ -99,7 +99,7 @@ include "classes/user.php";
 <form action="#" method="post">
   <div class="form-group">
     <label for="username" style="color:#154360">Username:</label>
-    <input type="username" class="form-control" name="username">
+    <input type="text" class="form-control" name="username">
   </div>
   <div class="form-group">
     <label for="password" style="color:#154360">Password:</label>
