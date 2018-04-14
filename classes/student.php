@@ -7,7 +7,6 @@ include "person.php";
 class STUDENT extends PERSON{
 	
 	
-	
 	public function Create(){
         
         //Create user account first 
@@ -67,7 +66,7 @@ class STUDENT extends PERSON{
 		PERSON::Init_Database();
 		try{
 			PERSON::$database->Connection->exec($query);
-            USER::Delete($this->Get_Username($student_id));
+            USER::Delete(self::Get_Username($student_id));
 			return true;
 		}catch(PDOException $e){
 			echo "Query UPDATE Failed ".$e->getMessage();
@@ -107,10 +106,8 @@ class STUDENT extends PERSON{
 		}
 	}
     
-	public function Update(){
-        
-        $student_id = $this->person_id;
-        
+	public function Update($student_id){
+                
         
         //Create user account first 
         USER::Update_Password($this->user->GetUsername(), $this->user->GetPassword()); 
@@ -160,10 +157,10 @@ class STUDENT extends PERSON{
     }
     
     
-    function Display($array){
+    public static function Display($array){
        
       
-        echo "<table>";
+        echo "<table  border=0 width='750' >";
         
         echo "<th>Student ID</th>";
         echo "<th>Name</th>";
@@ -178,26 +175,26 @@ class STUDENT extends PERSON{
 			echo "</td>";
 							
 			echo "<td>";
-			echo "<h2 style=\"color:#CC0000;\">";
+			echo "<h2>";
 			echo $Element['name'];
 			echo "</h2>";
             echo "</td>";
                 
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2>";
 			echo $Element['email'];
 			echo "</h2>";
             echo "</td>";
                 
                 
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2>";
 			echo $Element['phone'];
 			echo "</h2>";
             echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2>";
 			echo $Element['username'];
 			echo "</h2>";
             echo "</td>";
@@ -235,7 +232,7 @@ class STUDENT extends PERSON{
     public static function DisplayStudentCourses($array){
        
       
-        echo "<table>";
+        echo "<table  border=0 width='750' >";
         
         echo "<th>Course ID</th>";
         echo "<th>Name</th>";
@@ -301,5 +298,32 @@ class STUDENT extends PERSON{
         
         echo "</table>";
     }
+    
+    
+    
+    
+      
+    public static function Get_Student_Name($student_id) {
+	//TODO ...
+    $studentName = 'Student';
+    
+		self::Init_Database();
+        
+    $connection = self::$database->Connection;
+    $query = "SELECT * FROM student WHERE student_id = $student_id ;";
+    
+		try{
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
+			$studentName = $userObj->name;
+			
+		}catch(PDOException $e){
+			echo "Query Failed ".$e->getMessage();
+		}
+        
+			return $studentName;
+}
+    
 }
 ?>

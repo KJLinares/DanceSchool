@@ -31,34 +31,34 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html" style="color:white;">DanceStudio</a>
+      <a class="navbar-brand" href="index.php" style="color:white;">DanceStudio</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html" style="background-color:#154360" style="color:white;">Home</a></li>
+      <li class="active"><a href="index.php" style="background-color:#154360" style="color:white;">Home</a></li>
      
     </ul>
    <ul class="nav navbar-nav navbar-right">
-      <li><a href="test.html"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+      <li><a href="index.php"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
     </ul>
   </div>
 </nav>
 </br>
 </br>
 <div class="Box">
-<a href="ManageTeachers.html"><h2 style="color:#123"><b>Manage Teachers</b></h3></a></br>
-<a href="ManageTeachers.html"><img src="pic/teacher.jpg" alt="teacher" height="200px" title="Manage Teachers"></a>
+<a href="ManageTeachers.php"><h2 style="color:#123"><b>Manage Teachers</b></h3></a></br>
+<a href="ManageTeachers.php"><img src="pic/teacher.jpg" alt="teacher" height="200px" title="Manage Teachers"></a>
 <!--Pic_resurse: https://www.google.ca/search?tbm=isch&q=dance+instructor&chips=q:dance+instructor,g_5:contemporary,online_chips:hip+hop,online_chips:dance+moves,online_chips:studio,online_chips:jazz,online_chips:jazz+funk&sa=X&ved=0ahUKEwiH2ren3I3aAhWCPN8KHZQJCmYQ4lYILSgA&biw=1280&bih=566&dpr=1.5#imgrc=L97eJr5Wp-3pQM:
 -->
 
-<a href="ManageSchedule.html"><h2 style="color:#123"><b>Manage Schedules</b></h3></a></br>
+<a href="ManageSchedule.php"><h2 style="color:#123"><b>Manage Schedules</b></h3></a></br>
 <!--Pic_resurse: https://www.google.ca/search?biw=1280&bih=615&tbm=isch&sa=1&ei=zdm6WtzMGYHZ5gKcz62wAw&q=clock+dance&oq=clock+dan&gs_l=psy-ab.1.0.0l4j0i5i30k1l3j0i8i30k1l3.9869.11214.0.14724.4.4.0.0.0.0.81.287.4.4.0....0...1c.1.64.psy-ab..0.4.286...0i67k1.0.r_fWHkqSTq8#imgrc=FOGGqD8vIheOcM:  
 -->
-<a href="ManageSchedule.html"><img src="pic/clock.jpg" alt="clock" height="150px" title="Manage Schedules"></a>
+<a href="ManageSchedule.php"><img src="pic/clock.jpg" alt="clock" height="150px" title="Manage Schedules"></a>
 
-<a href="ManageStudents.html"><h2 style="color:#123"><b>Manage Students</b></h3></a></br>
+<a href="ManageStudents.php"><h2 style="color:#123"><b>Manage Students</b></h3></a></br>
 <!--Pic_resurse: https://www.google.ca/search?biw=1280&bih=566&tbm=isch&sa=1&ei=R966Wp-CBYul_Qb206_QCg&q=dance+group&oq=dance+gr&gs_l=psy-ab.1.0.0l10.6938.10279.0.12526.10.10.0.0.0.0.167.754.9j1.10.0....0...1c.1.64.psy-ab..0.10.754...0i67k1j0i5i30k1j0i8i30k1.0.twFv8QhMkUo#imgrc=7-rOHwd6YzFEvM:
  -->
-<a href="ManageStudents.html"><img src="pic/students.jpg" alt="students" height="200px" title="Manage Students"></a>
+<a href="ManageStudents.php"><img src="pic/students.jpg" alt="students" height="200px" title="Manage Students"></a>
 
 </div>
 </body>

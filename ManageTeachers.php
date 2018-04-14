@@ -1,3 +1,9 @@
+<?php 
+include "classes/employee.php";
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,16 +34,104 @@
    
   </head>
 <body>
+
+ <?php
+    
+    
+	$Teacher_ID = 0;
+				$error_message = '';
+				$confirm_message  = '';
+                $list = '';
+    
+     
+				 
+    if (isset($_POST['Save'])){
+        
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];    
+        $preferred_schedule = $_POST['preferred_schedule'];
+        $user_type = "Teacher";
+        
+        if (!empty($name) &&!empty($email) &&!empty($phone) &&!empty($preferred_schedule) &&!empty($username) &&!empty($password) ){
+            
+            
+            $newTeacher = new EMPLOYEE($name , $email, $phone, $preferred_schedule, new USER($username, $password, $user_type));
+			
+			$newTeacher_id = $newTeacher->Create();
+            
+            $confirm_message .='<strong>   Teacher saved successfully with ID = '. $newTeacher_id . '</strong><br/><br/><br/><br/>';
+        }
+        else{
+            
+				$error_message .= '<strong>   Error : You need to fill all the fields to save the Teacher !</strong><br/><br/><br/><br/>';
+        }
+        
+        
+    }
+					
+    
+    elseif (isset($_POST['Update'])){
+         
+       $Teacher_ID = $_POST['employee_id'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];    
+        $preferred_schedule = $_POST['preferred_schedule'];
+        $user_type = "Teacher";
+        
+        if (!empty($Teacher_ID)&& !empty($name) &&!empty($email) &&!empty($phone)&&!empty($preferred_schedule) &&!empty($username) &&!empty($password) ){
+            
+            $newTeacher = new EMPLOYEE($name , $email, $phone, $preferred_schedule, new USER($username, $password, $user_type));
+            
+			$newTeacher->Update($Teacher_ID);
+            
+            $confirm_message .='<strong>   Teacher UPDATED successfully </strong><br/><br/><br/><br/>';
+        }
+        else{
+            
+				$error_message .= '<strong>   Error : You need to fill all the fields to update the Teacher !</strong><br/><br/><br/><br/>';
+        }
+        
+        
+    }
+     
+    
+    elseif (isset($_POST['Delete'])){
+         
+       $Teacher_ID = $_POST['employee_id'];
+            
+        if (!empty($Teacher_ID) ){
+            
+            
+            if (EMPLOYEE::Delete($Teacher_ID) ){
+            $confirm_message .='<strong>   Teacher Deleted successfully </strong><br/><br/><br/><br/>';
+            }
+            
+        }
+        else{
+            
+				$error_message .= '<strong>   Error : You need to fill the Student id field to update the Teacher !</strong><br/><br/><br/><br/>';
+            }
+			
+        
+    }
+        
+				?>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html" style="color:white;">DanceStudio</a>
+      <a class="navbar-brand" href="index.php" style="color:white;">DanceStudio</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="Manager.html" style="background-color:#154360" style="color:white;">Managment Page</a></li>
+      <li class="active"><a href="Manager.php" style="background-color:#154360" style="color:white;">Management Page</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right">
-      <li><a href="test.html"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+      <li><a href="index.php"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
     </ul>
    
   </div>
@@ -48,40 +142,81 @@
 </br>
 </br>
 <div class="Box">
-<form action="/action_page.php">
+<form action="#" method="post">
 
 <h3 style="color:#154360"><b>Teacher Info<b></h3>
+
+<div>
+       <br/>
+        <font color=#CC0000><?php echo $error_message ; ?></font> 
+        <font color=#006600><?php echo $confirm_message; ?></font> 
+    <br/>
+</div> 
+
+
  <div class="form-group">
-    <label for="id" style="color:#154360"><h4>Teacher ID:<h4></label>
-    <input type="name" class="form-control" id="employee_id">
+    <label for="employee_id" style="color:#154360"><h4>Teacher ID:<h4></label>
+    <select name='employee_id' >
+				<option value = '0'>None </option>
+				<?php 
+				    for($i=1; $i<=15; $i++){
+				       $teacher = EMPLOYEE::Get_Teacher_Name($i);
+					   echo "<option value=\"$i\" ";
+					
+                        if($Teacher_ID == $i){echo "selected"; }
+						      echo ">$teacher</option>";
+					    }
+				?>
+            </select>
   </div>
  
 	<div class="form-group">
     <label for="name" style="color:#154360">Teacher name:</label>
-    <input type="text" class="form-control" id="name">
+    <input type="text" class="form-control" name="name">
   </div>
   <div class="form-group">
      <label for="start_date" style="color:#154360" >Email:</label>
-    <input type="datetime" class="form-control" id="email">
+    <input type="datetime" class="form-control" name="email">
   </div>
   <div class="form-group">
      <label for="end_date" style="color:#154360">Phone:</label>
-    <input type="datetime" class="form-control" id="phone">
+    <input type="datetime" class="form-control" name="phone">
   </div>
   <div class="form-group">
     <label for="schedule" style="color:#154360">Preferred Schedule:</label>
-    <input type="text" class="form-control" id="preferred_schedule">
+    <input type="text" class="form-control" name="preferred_schedule">
+  </div>
+  <div class="form-group">
+     <label for="username" style="color:#154360">Username:</label>
+    <input type="text" class="form-control" name="username">
+  </div>
+  <div class="form-group">
+     <label for="password" style="color:#154360">Password:</label>
+    <input type="text" class="form-control" name="password">
   </div>
   
   <div style="text-align:center">
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">Save</button>
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">List</button>
-<button type="submit" class="btn btn-primary" style="background-color:#154360">Update</button>
-<button type="submit" class="btn btn-primary" style="background-color:#154360">Delete</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="Save">Save</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="List">List</button>
+<button type="submit" class="btn btn-primary" style="background-color:#154360" name="Update">Update</button>
+<button type="submit" class="btn btn-primary" style="background-color:#154360" name="Delete">Delete</button>
 </div>
 
 </form>
 </div>
 </div>
+
+
+<?php
+   
+   if (isset($_POST['List'])){
+        
+     EMPLOYEE::Display(EMPLOYEE::ListAll());
+        
+    }
+   
+    
+				?>
+
 </body>
 </html>

@@ -59,7 +59,7 @@ class EMPLOYEE extends PERSON{
 		PERSON::Init_Database();
 		try{
 			PERSON::$database->Connection->exec($query);
-            USER::Delete($this->Get_Username($employee_id));
+            USER::Delete(self::Get_Username($employee_id));
 			return true;
 		}catch(PDOException $e){
 			echo "Query UPDATE Failed ".$e->getMessage();
@@ -83,9 +83,7 @@ class EMPLOYEE extends PERSON{
 		}
 	}
   
-    public function Update(){
-        
-        $employee_id = $this->person_id;
+    public  function Update($employee_id){
         
         
         //Create user account first 
@@ -137,7 +135,7 @@ class EMPLOYEE extends PERSON{
     }
     
     
-    function Display($array){
+    public static function Display($array){
        
       
         echo "<table>";
@@ -159,32 +157,32 @@ class EMPLOYEE extends PERSON{
 			echo "<h2 style=\"color:#CC0000;\">";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['email'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['phone'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['preferred_shedule'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['username'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
 			echo "</tr>";
 	}
         
@@ -216,7 +214,7 @@ class EMPLOYEE extends PERSON{
 		}
     }
     
-        public stat function DisplayTeacherCourses($array){
+        public static function DisplayTeacherCourses($array){
        
       
         echo "<table>";
@@ -238,26 +236,26 @@ class EMPLOYEE extends PERSON{
 			echo "<h2 style=\"color:#CC0000;\">";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['start_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['end_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
 			echo $Element['schedule'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "</tr>";
 	}
@@ -285,7 +283,28 @@ class EMPLOYEE extends PERSON{
 		}
     }
     
+    public static function Get_Teacher_Name($teacher_id) {
+	//TODO ...
+    $teacherName = 'teacher';
     
+		self::Init_Database();
+        
+    $connection = self::$database->Connection;
+    $query = "SELECT * FROM employee WHERE employee_id = $teacher_id ;";
+    
+		try{
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
+			
+            $teacherName = $userObj->name;
+			return $teacherName;
+			
+		}catch(PDOException $e){
+			echo "Query Failed ".$e->getMessage();
+		}
+        
+}   
     
 }
 ?>

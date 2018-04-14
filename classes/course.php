@@ -18,7 +18,7 @@ class COURSE {
     
       protected static $database;
 		
-	function __construct( $name , $start_date, $end_date, $schedule, $price,  EMPLOYEE $employee, $course_id = null)
+	function __construct( $name , $start_date, $end_date, $schedule, $price,   $employee, $course_id = null)
     {
         
         $this->course_id = $course_id;
@@ -52,7 +52,7 @@ class COURSE {
             $sql->bindParam(3, $this->end_date); 
             $sql->bindParam(4, $this->schedule); 
             $sql->bindParam(5, $this->price);  
-            $sql->bindParam(6, $this->employee->GetID()); 
+            $sql->bindParam(6, $this->employee); 
 			$sql->execute();
             
             $last_id = self::$database->Connection->LastInsertId();
@@ -64,8 +64,7 @@ class COURSE {
 		}
     }
 	
-	public function Update(){
-        $course_id = $this->course_id;
+	public function Update($course_id){
         
 		$query = "UPDATE course ";
 		$query .= "SET name = ? , start_date = ? , end_date = ?, schedule = ?, price = ? , employee_id = ? ";
@@ -81,7 +80,7 @@ class COURSE {
             $sql->bindParam(3, $this->end_date); 
             $sql->bindParam(4, $this->schedule); 
             $sql->bindParam(5, $this->price); 
-            $sql->bindParam(6, $this->employee->GetID()); 
+            $sql->bindParam(6, $this->employee); 
 			
 			$sql->execute();
             
@@ -92,7 +91,7 @@ class COURSE {
         
     }
     
-	public function Delete($course_id){
+	public static function Delete($course_id){
         
         
          $query  = "DELETE FROM course  ";
@@ -128,10 +127,10 @@ class COURSE {
     }
     
     
-    function Display($array){
+     public static  function Display($array){
        
       
-        echo "<table>";
+        echo "<table  border=0 width='750'>";
         
         echo "<th>Course ID</th>";
         echo "<th>Name</th>";
@@ -149,41 +148,41 @@ class COURSE {
 			echo "</td>";
 							
 			echo "<td>";
-			echo "<h2 style=\"color:#CC0000;\">";
+			echo "<h2>";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['start_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
                 
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2>";
 			echo $Element['end_date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2>";
 			echo $Element['schedule'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['price'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['employee_id'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "</tr>";
 	}
@@ -207,13 +206,13 @@ class COURSE {
 			$stmt = $connection->prepare($query);
 			$stmt->execute();
 			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
-			
-			return $userObj->name;
+			$courseName = $userObj->name;
 			
 		}catch(PDOException $e){
 			echo "Query Failed ".$e->getMessage();
 		}
         
+			return $courseName;
 }
     
     
@@ -244,7 +243,7 @@ class COURSE {
         
         
       
-        echo "<table>";
+        echo "<table  border=0 width='750' >";
         
         echo "<th>Course ID</th>";
         echo "<th>Name</th>";
@@ -261,34 +260,34 @@ class COURSE {
 			echo "</td>";
 							
 			echo "<td>";
-			echo "<h2 style=\"color:#CC0000;\">";
+			echo "<h2 >";
 			echo $Element['name'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['schedule'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['price'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['employee_id'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                     
 			echo "<td>";
-			echo "<h2 style=\"color:#121111;\">";
+			echo "<h2 >";
 			echo $Element['date'];
 			echo "</h2>";
-            echo "</td>"
+            echo "</td>";
                 
 			echo "</tr>";
 	}
