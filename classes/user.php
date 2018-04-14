@@ -75,9 +75,8 @@ class USER{
 			$sql = self::$database->Connection->prepare($query);
 			$sql->execute();
 			$result = $sql->fetch(PDO::FETCH_OBJ);
-			$password = $result->password;
-            echo "password ".$password."<br>";
-			return ($password == $encrypted);
+            
+			return !empty($result->$user_type);
 			
 		}catch(PDOException $e){
 			echo "Query SELECT Failed ".$e->getMessage();

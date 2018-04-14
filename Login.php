@@ -48,7 +48,7 @@ include "classes/user.php";
 										
 							
 							$result = USER::Login($username, $password);//
-							 if($result === FALSE){
+							 if(!$result){
 								
 								$login_error = '<img src="images/No.png" width="25px" />';
 								$login_error .= '<strong>   Error : Username and Password combination is incorrect !</strong><br/><br/><br/><br/>';
@@ -56,24 +56,31 @@ include "classes/user.php";
 								
 								$login_confirm = "<strong>   Your Login is Successfull ! </strong><br/><br/><br/><br/>";
                                  
-                               /*  switch($result){
+                                 switch($result){
                                      case "Student" :
                                          
                                          $login_confirm .= "Student";
+                                                                                                                 
+                                         header("Location: Student.php");
+                                         
                                     break;
                                      case "Teacher" :
                                          
                                          $login_confirm .= "Teacher";
+                                                                                                                 
+                                         header("Location: Teacher.php");
                                          
                                          break;
                                      case "Manager":
                                          
                                          $login_confirm .= "Manager";
+                                                                                                                 
+                                         header("Location: Manager.php");
                                          
                                          break;
                                  }
                                      
-                                 */    
+                                   
 							}
 						
 					}
@@ -81,10 +88,10 @@ include "classes/user.php";
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html" style="color:white;">DanceStudio</a>
+      <a class="navbar-brand" href="index.php" style="color:white;">DanceStudio</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html" style="background-color:#154360" style="color:white;">Home</a></li>
+      <li class="active"><a href="index.php" style="background-color:#154360" style="color:white;">Home</a></li>
      
     </ul> 
 	</div>
