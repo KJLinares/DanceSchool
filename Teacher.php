@@ -1,3 +1,10 @@
+
+<?php 
+include "classes/course.php";
+if(!class_exists('EMPLOYEE')){ include "employee.php"; }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,16 +36,47 @@
    
   </head>
 <body>
+
+
+<?php
+    $Course_ID = 0;
+    $Teacher_ID = 0 ;
+				$error_message = '';
+				$confirm_message  = '';
+                $list = '';
+    
+     
+				 
+    if (isset($_POST['cancel_course'])){
+        
+        $date = $_POST['date'];
+        $Course_ID = $_POST['course_id'];
+        
+        
+        if (!empty($date) &&!empty($Course_ID) ){
+            
+            EMPLOYEE::AddCancelation($Course_ID, $date);
+            $confirm_message .='<strong>   Course Cancelation saved successfully </strong><br/><br/><br/><br/>';
+        }
+        else{
+            
+				$error_message .= '<strong>   Error : You need to fill all the fields to save the course cancelation !</strong><br/><br/><br/><br/>';
+        }
+        
+        
+    }
+        
+				?>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html" style="color:white;">DanceStudio</a>
+      <a class="navbar-brand" href="index.php" style="color:white;">DanceStudio</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html" style="background-color:#154360" style="color:white;">Home</a></li>
+      <li class="active"><a href="index.php" style="background-color:#154360" style="color:white;">Home</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right">
-      <li><a href="test.html"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+      <li><a href="index.php"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
     </ul>
    
   </div>
@@ -47,17 +85,54 @@
 </br>
 </br>
 <div class="Box">
-<form action="/action_page.php">
+<form action="#" method="post">
 
 <h3 style="color:#154360"><b>Dancing courses<b></h3>
+<br/>
+            <font color=#CC0000><?php echo $error_message ; ?></font> 
+            <font color=#006600><?php echo $confirm_message; ?></font> 
+            <br/>
 <img src="pic/students.jpg" alt="students" height="200px" title="Manage Students">
 </br>
 </br>
   <div style="text-align:center">
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">My Courses</button>
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">Cancel a Course</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="my_courses">My Courses</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name= "cancel_course">Cancel a Course</button>
 
-<div>
+    </div>
+    <div class="form-group">
+    <label for="course_id" style="color:#154360"><h4><b>Course ID:</b></h4></label>
+     <select name='course_id' >
+				<option value = '0'>None </option>
+				<?php 
+				    for($i=1; $i<=15; $i++){
+				       $course = COURSE::Get_Course_Name($i);
+					   echo "<option value=\"$i\" ";
+					
+                        if($Course_ID == $i){echo "selected"; }
+						      echo ">$course</option>";
+					    }
+				?>
+				</select>
+  </div>
+  <div class="form-group">
+    <label for="date" style="color:#154360"><h4><b>Date:</b></h4></label>
+    <input type="datetime" class="form-control" name="date">
+  </div>
 </form>
 </div>
 </div>
+
+    </div>
+    </body>
+        
+<?php
+   
+   if (isset($_POST['my_courses'])){
+        
+     EMPLOYEE::DisplayTeacherCourses(EMPLOYEE::ListTeacherCourses($Teacher_ID));
+        
+    }
+   
+?>
+</html>

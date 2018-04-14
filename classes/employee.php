@@ -305,6 +305,6 @@ class EMPLOYEE extends PERSON{
 		}
         
 }   
-    
 }
+
 ?>

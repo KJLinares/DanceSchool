@@ -1,7 +1,8 @@
 <?php
 
 if(!class_exists('DatabasePDO')){ include "database.php"; }
-include "employee.php";
+
+if(!class_exists('EMPLOYEE')){ include "employee.php"; }
 
 
 class COURSE {
