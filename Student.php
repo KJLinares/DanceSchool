@@ -1,3 +1,13 @@
+
+<?php 
+include "classes/course.php";
+include "classes/student.php";
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +39,36 @@
    
   </head>
 <body>
+
+<?php
+    $Course_ID = 0;
+    $Student_ID = 0 ;
+				$error_message = '';
+				$confirm_message  = '';
+                $list = '';
+    
+     
+				 
+    if (isset($_POST['new_course'])){
+        
+        $status = $_POST['status'];
+        $Course_ID = $_POST['course_id'];
+        
+        
+        if (!empty($status) &&!empty($Course_ID) ){
+            
+            COURSE::AddCourse($Student_ID, $Course_ID, $status);
+            $confirm_message .='<strong>   Course saved successfully </strong><br/><br/><br/><br/>';
+        }
+        else{
+            
+				$error_message .= '<strong>   Error : You need to fill all the fields to save the course !</strong><br/><br/><br/><br/>';
+        }
+        
+        
+    }
+        
+				?>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
@@ -47,20 +87,52 @@
 </br>
 </br>
 <div class="Box">
-<form action="/action_page.php">
+<form action="#" method="post">
 
 <h3 style="color:#154360"><b>Dancing courses<b></h3>
+<br/>
+            <font color=#CC0000><?php echo $error_message ; ?></font> 
+            <font color=#006600><?php echo $confirm_message; ?></font> 
+            <br/>
 <img src="pic/students.jpg" alt="students" height="200px" title="Manage Students">
 </br>
 </br>
   <div style="text-align:center">
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">My Courses</button>
-  <button type="submit" class="btn btn-primary" style="background-color:#154360">New Course</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="my_courses">My Courses</button>
+  <button type="submit" class="btn btn-primary" style="background-color:#154360" name="new_course">New Course</button>
 <div class="form-group">
     <label for="status" style="color:#154360"><h4><b>Status:</b></h4></label>
-    <input type="text" class="form-control" id="status">
+    <input type="text" class="form-control" name="status">
+  </div>
+  <div class="form-group">
+    <label for="course_id" style="color:#154360"><h4><b>Course ID:</b></h4></label>
+     <select name='course_id' >
+				<option value = '0'>None </option>
+				<?php 
+				    for($i=1; $i<=15; $i++){
+				       $course = COURSE::Get_Course_Name($i);
+					   echo "<option value=\"$i\" ";
+					
+                        if($Course_ID == $i){echo "selected"; }
+						      echo ">$course</option>";
+					    }
+				?>
+				</select>
   </div>
 <div>
 </form>
 </div>
 </div>
+    </body>
+    
+    
+<?php
+   
+   if (isset($_POST['my_courses'])){
+        
+     STUDENT::DisplayStudentCourses(STUDENT::ListStudentCourses($Student_ID));
+        
+    }
+   
+?>
+</html>

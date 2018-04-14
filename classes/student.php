@@ -1,7 +1,6 @@
 
 <?php 
-
-include "person.php";
+if(!class_exists('PERSON')){ include "person.php"; }
 
 
 class STUDENT extends PERSON{
@@ -52,6 +51,7 @@ class STUDENT extends PERSON{
 			
 			$sql->execute();
             
+            return true;
 			
 		}catch(PDOException $e){
 			echo "Query INSERT Failed ".$e->getMessage();

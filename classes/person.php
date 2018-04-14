@@ -2,7 +2,8 @@
 
 
 if(!class_exists('DatabasePDO')){ include "database.php"; }
-include "user.php";
+if(!class_exists('USER')){ include "user.php"; }
+
 
 abstract class PERSON {
     
