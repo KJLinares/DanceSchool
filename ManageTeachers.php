@@ -58,7 +58,7 @@ include "classes/employee.php";
         if (!empty($name) &&!empty($email) &&!empty($phone) &&!empty($preferred_schedule) &&!empty($username) &&!empty($password) ){
             
             
-            $newTeacher = new EMPLOYEE($name , $email, $phone, $preferred_schedule, new USER($username, $password, $user_type));
+            $newTeacher = new EMPLOYEE($name , $email, $phone, new USER($username, $password, $user_type), $preferred_schedule);
 			
 			$newTeacher_id = $newTeacher->Create();
             

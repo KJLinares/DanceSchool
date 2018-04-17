@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 
 <?php 
-include "classes/user.php";
+if(!class_exists('USER')){ include "classes/user.php"; }
+
+if(!class_exists('STUDENT')){ include "classes/student.php"; }
+
+if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
 ?>
  
 
@@ -39,6 +43,7 @@ include "classes/user.php";
  
 				$login_error = '';
 				$login_confirm = '';
+                $user_id;
 				 
 				if(isset($_POST['submit']) && !empty($_POST['username']) && !empty($_POST['password']))
 				{
@@ -60,14 +65,20 @@ include "classes/user.php";
                                      case "Student" :
                                          
                                          $login_confirm .= "Student";
-                                                                                                                 
-                                         header("Location: Student.php");
+                                        
+                                         $user_id=  STUDENT::Get_StudentID($username) ; 
+                                         $_SESSION['Role_ID'] = $user_id;
+                                    
+                                        header("Location: Student.php");
                                          
                                     break;
                                      case "Teacher" :
                                          
                                          $login_confirm .= "Teacher";
-                                                                                                                 
+                                                  
+                                         $user_id=  EMPLOYEE::Get_TeacherID($username) ;
+                                         $_SESSION['Role_ID'] = $user_id;
+                                         
                                          header("Location: Teacher.php");
                                          
                                          break;

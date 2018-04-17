@@ -14,7 +14,7 @@ class EMPLOYEE extends PERSON{
     
     function __construct( $name , $email, $phone, USER $user, $preferred_shedule){
         
-	   parent::__construct( $name , $email, $phone, $user);
+	   PERSON::__construct( $name , $email, $phone, $user);
         
         $this->preferred_shedule = $preferred_shedule;
            
@@ -28,7 +28,7 @@ class EMPLOYEE extends PERSON{
         
         
         //creating entry on student table 
-		$query = "INSERT INTO employee ( name, email, phone,  username, preferred_shedule) ";
+		$query = "INSERT INTO employee ( name, email, phone, preferred_schedule, username) ";
 		$query .= "VALUES(?,?,?,?,?)";
 		PERSON::Init_Database();
 		
@@ -37,8 +37,8 @@ class EMPLOYEE extends PERSON{
             $sql->bindParam(1, $this->name);
             $sql->bindParam(2, $this->email);
             $sql->bindParam(3, $this->phone); 
-            $sql->bindParam(4, $this->user->GetUsername()); 
-            $sql->bindParam(5, $this->preferred_shedule);
+            $sql->bindParam(4, $this->preferred_shedule);
+            $sql->bindParam(5, $this->user->GetUsername()); 
 			
 			$sql->execute();
             
@@ -150,7 +150,7 @@ class EMPLOYEE extends PERSON{
 	foreach($array as $Index => $Element){
 		echo "<tr>";
 			echo "<td>";
-			echo $Element['student_id'];
+			echo $Element['employee_id'];
 			echo "</td>";
 							
 			echo "<td>";
@@ -174,7 +174,7 @@ class EMPLOYEE extends PERSON{
                 
 			echo "<td>";
 			echo "<h2 style=\"color:#121111;\">";
-			echo $Element['preferred_shedule'];
+			echo $Element['preferred_schedule'];
 			echo "</h2>";
             echo "</td>";
                     
@@ -305,6 +305,25 @@ class EMPLOYEE extends PERSON{
 		}
         
 }   
+    
+    public static function Get_TeacherID($username){
+		self::init_database();
+		$connection = self::$database->Connection;
+		try{
+			$query = "SELECT employee_id FROM employee WHERE username = $username ";
+			$stmt = $connection->prepare($query);
+			$stmt->execute();
+			$userObj = $stmt->fetch(PDO::FETCH_OBJ);
+			
+			return $userObj->employee_id;
+			
+		}catch(PDOException $e){
+			echo "Query Failed ".$e->getMessage();
+		}
+	}
+   
+    
+    
 }
 
 ?>
