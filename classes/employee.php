@@ -1,8 +1,7 @@
 
 <?php 
 
-include "person.php";
-
+if(!class_exists('PERSON')){ include "person.php"; }
 
 class EMPLOYEE extends PERSON{
 	
