@@ -42,7 +42,7 @@ include "classes/student.php";
 
 <?php
     $Course_ID = 0;
-    $Student_ID = 0 ;
+    $Student_ID = $_SESSION['Role_ID'] ;
 				$error_message = '';
 				$confirm_message  = '';
                 $list = '';

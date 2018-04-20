@@ -40,7 +40,7 @@ if(!class_exists('EMPLOYEE')){ include "employee.php"; }
 
 <?php
     $Course_ID = 0;
-    $Teacher_ID = 0 ;
+    $Teacher_ID = $_SESSION['Role_ID'] ;
 				$error_message = '';
 				$confirm_message  = '';
                 $list = '';

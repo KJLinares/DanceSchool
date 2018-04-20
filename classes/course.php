@@ -44,10 +44,10 @@ class COURSE {
         //creating entry on course table 
 		$query = "INSERT INTO course ( name, start_date, end_date, schedule, price, employee_id )";
 		$query .= "VALUES(?,?,?,?,?, ?)";
-		PERSON::Init_Database();
+		self::Init_Database();
 		
 		try{
-			$sql = PERSON::$database->Connection->prepare($query);
+			$sql = self::$database->Connection->prepare($query);
             $sql->bindParam(1, $this->name);
             $sql->bindParam(2, $this->start_date);
             $sql->bindParam(3, $this->end_date); 
