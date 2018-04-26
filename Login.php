@@ -52,7 +52,8 @@ if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
 							//Send a query to database to check the username and password
 										
 							
-							$result = USER::Login($username, $password);//
+							$result = USER::Login($username, $password);
+                    
 							 if(!$result){
 								
 								$login_error = '<img src="images/No.png" width="25px" />';

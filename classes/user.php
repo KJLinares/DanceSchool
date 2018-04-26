@@ -66,6 +66,7 @@ class USER{
         
 		$salt = self::Get_Salt($username);
 		$encrypted = crypt($password , $salt);
+        
         echo "salt ".$salt."<br>";
         echo "crypted ".$encrypted."<br>";
 		$query  = "SELECT * FROM user ";
@@ -76,7 +77,7 @@ class USER{
 			$sql->execute();
 			$result = $sql->fetch(PDO::FETCH_OBJ);
             
-			return !empty($result->$user_type);
+			return !empty($result->user_type);
 			
 		}catch(PDOException $e){
 			echo "Query SELECT Failed ".$e->getMessage();

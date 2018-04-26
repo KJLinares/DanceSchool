@@ -81,10 +81,10 @@ include "classes/student.php";
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#154360">
 <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html" style="color:white;">DanceStudio</a>
+      <a class="navbar-brand" href="index.php" style="color:white;">DanceStudio</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html" style="background-color:#154360" style="color:white;">Home</a></li>
+      <li class="active"><a href="index.php" style="background-color:#154360" style="color:white;">Home</a></li>
      
     </ul>
    
