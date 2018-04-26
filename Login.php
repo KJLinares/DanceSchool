@@ -63,31 +63,31 @@ if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
 								$login_confirm = "<strong>   Your Login is Successfull ! </strong><br/><br/><br/><br/>";
                                  
                                  switch($result){
-                                     case "Student" :
+                                     case 'Student' :
                                          
                                          $login_confirm .= "Student";
                                         
                                          $user_id=  STUDENT::Get_StudentID($username) ; 
                                          $_SESSION['Role_ID'] = $user_id;
                                     
-                                        header("Location: Student.php");
+                                        //header("Location: Student.php");
                                          
                                     break;
-                                     case "Teacher" :
+                                     case 'Teacher' :
                                          
                                          $login_confirm .= "Teacher";
                                                   
                                          $user_id=  EMPLOYEE::Get_TeacherID($username) ;
                                          $_SESSION['Role_ID'] = $user_id;
                                          
-                                         header("Location: Teacher.php");
+                                         //header("Location: Teacher.php");
                                          
                                          break;
-                                     case "Manager":
+                                     case 'Manager':
                                          
                                          $login_confirm .= "Manager";
                                                                                                                  
-                                         header("Location: Manager.php");
+                                         //header("Location: Manager.php");
                                          
                                          break;
                                  }
