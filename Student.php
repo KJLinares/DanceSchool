@@ -1,4 +1,14 @@
+<?php
+    ob_start();
 
+	if(! isset($_SESSION)){
+		session_start();
+	}
+    
+    
+       
+    $Student_ID = $_SESSION['Role_ID'] ;
+?>
 <?php 
 include "classes/course.php";
 include "classes/student.php";
@@ -42,7 +52,6 @@ include "classes/student.php";
 
 <?php
     $Course_ID = 0;
-    $Student_ID = $_SESSION['Role_ID'] ;
 				$error_message = '';
 				$confirm_message  = '';
                 $list = '';

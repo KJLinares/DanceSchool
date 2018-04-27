@@ -130,7 +130,7 @@ include "classes/student.php";
       <li class="active"><a href="Manager.php" style="background-color:#154360" style="color:white;">Management Page</a></li>
     </ul>
    <ul class="nav navbar-nav navbar-right">
-      <li><a href="index.php"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+      <li><a href="Logout.php"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
     </ul>
   </div>
 </nav>

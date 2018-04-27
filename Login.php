@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<?php ob_start(); ?> 
 <?php 
 if(!class_exists('USER')){ include "classes/user.php"; }
 
@@ -44,6 +44,12 @@ if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
 				$login_error = '';
 				$login_confirm = '';
                 $user_id;
+    
+    
+
+				if(! isset($_SESSION)){
+					session_start();
+				}
 				 
 				if(isset($_POST['submit']) && !empty($_POST['username']) && !empty($_POST['password']))
 				{
@@ -70,7 +76,7 @@ if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
                                          $user_id=  STUDENT::Get_StudentID($username) ; 
                                          $_SESSION['Role_ID'] = $user_id;
                                     
-                                        //header("Location: Student.php");
+                                        header("Location: Student.php");
                                          
                                     break;
                                      case 'Teacher' :
@@ -80,14 +86,14 @@ if(!class_exists('EMPLOYEE')){ include "classes/employee.php"; }
                                          $user_id=  EMPLOYEE::Get_TeacherID($username) ;
                                          $_SESSION['Role_ID'] = $user_id;
                                          
-                                         //header("Location: Teacher.php");
+                                         header("Location: Teacher.php");
                                          
                                          break;
                                      case 'Manager':
                                          
                                          $login_confirm .= "Manager";
                                                                                                                  
-                                         //header("Location: Manager.php");
+                                         header("Location: Manager.php");
                                          
                                          break;
                                  }
